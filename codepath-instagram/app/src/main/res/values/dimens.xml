@@ -1,0 +1,16 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    
+    <dimen name="item_post_side_margin">14dp</dimen>
+    <dimen name="item_post_poster_data_height">52dp</dimen>
+    <dimen name="item_post_avatar_size">30dp</dimen>
+    <dimen name="item_post_avatar_margin_top">11dp</dimen>
+    <dimen name="item_post_poster_name_margin">8dp</dimen>
+    <dimen name="item_post_likes_margin_top">10dp</dimen>
+    <dimen name="item_post_likes_margin_bottom">4dp</dimen>
+    <dimen name="item_post_likes_margin_left_heart">5dp</dimen>
+    <dimen name="item_post_separator_margin">24dp</dimen>
+    <dimen name="item_post_poster_name_size">14sp</dimen>
+</resources>
