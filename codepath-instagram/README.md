@@ -14,7 +14,7 @@ Completed user stories:
  
 Notes:
 
-* Not sure about the square picture. But it looks square to me.
+* Not sure about the square picture. But it looks square to me. Just did `fit()` call with Picasso, and on `ImageView` I added `adjustViewBounds=true` as well as `fitXY`.
 
 Walkthrough of all user stories:
 
