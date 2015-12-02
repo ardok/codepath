@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Instagram</string>
+    <string name="comments_activity">Comments</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
     <string name="item_post_poster_name_font">sans-serif-medium</string>
+
+    <string name="menu_share">Share</string>
 </resources>
