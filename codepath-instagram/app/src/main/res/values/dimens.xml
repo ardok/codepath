@@ -12,5 +12,6 @@
     <dimen name="item_post_likes_margin_bottom">4dp</dimen>
     <dimen name="item_post_likes_margin_left_heart">5dp</dimen>
     <dimen name="item_post_separator_margin">24dp</dimen>
-    <dimen name="item_post_poster_name_size">14sp</dimen>
+
+    <dimen name="text_size_normal">14sp</dimen>
 </resources>

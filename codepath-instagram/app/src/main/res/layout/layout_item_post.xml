@@ -27,7 +27,7 @@
             android:layout_marginStart="@dimen/item_post_poster_name_margin"
             android:layout_marginLeft="@dimen/item_post_poster_name_margin"
             android:fontFamily="@string/item_post_poster_name_font"
-            android:textSize="@dimen/item_post_poster_name_size"
+            android:textSize="@dimen/text_size_normal"
             android:textColor="@color/blue_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -49,8 +49,56 @@
         android:adjustViewBounds="true"
         android:scaleType="fitXY" />
 
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="@dimen/item_post_side_margin"
+        android:layout_marginLeft="@dimen/item_post_side_margin"
+        android:layout_marginEnd="@dimen/item_post_side_margin"
+        android:layout_marginRight="@dimen/item_post_side_margin"
+        android:layout_width="match_parent"
+        android:layout_height="22dp">
+
+        <ImageView
+            android:id="@+id/likeIV"
+            android:contentDescription="Like"
+            android:src="@drawable/ic_heart"
+            android:layout_width="22dp"
+            android:layout_height="22dp" />
+
+        <ImageView
+            android:contentDescription="Comment"
+            android:src="@drawable/ic_comment"
+            android:layout_toRightOf="@+id/likeIV"
+            android:layout_toEndOf="@+id/likeIV"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp" />
+
+        <ImageView
+            android:id="@+id/moreIV"
+            android:contentDescription="More Actions"
+            android:src="@drawable/ic_more_dots"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="8dp"
+            android:layout_height="22dp" />
+
+    </RelativeLayout>
+
+    <View
+        android:background="@color/light_gray_separator_line"
+        android:layout_marginStart="@dimen/item_post_side_margin"
+        android:layout_marginLeft="@dimen/item_post_side_margin"
+        android:layout_marginEnd="@dimen/item_post_side_margin"
+        android:layout_marginRight="@dimen/item_post_side_margin"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
     <LinearLayout
         android:orientation="vertical"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="@dimen/item_post_side_margin"
         android:layout_marginLeft="@dimen/item_post_side_margin"
         android:layout_marginEnd="@dimen/item_post_side_margin"
@@ -65,24 +113,39 @@
             android:drawableLeft="@drawable/ic_small_heart_filled"
             android:drawableStart="@drawable/ic_small_heart_filled"
             android:fontFamily="@string/item_post_poster_name_font"
-            android:textSize="@dimen/item_post_poster_name_size"
+            android:textSize="@dimen/text_size_normal"
             android:textColor="@color/blue_text"
             android:drawablePadding="@dimen/item_post_likes_margin_left_heart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
+            android:id="@+id/captionTV"
+            android:textSize="@dimen/text_size_normal"
+            android:lineSpacingMultiplier="1.2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/captionTV"
-                android:textSize="14sp"
-                android:lineSpacingMultiplier="1.2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+            android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/viewAllCommentsTV"
+            android:textSize="@dimen/text_size_normal"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/light_gray_text"
+            android:height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/commentsLL"
+        android:layout_marginStart="@dimen/item_post_side_margin"
+        android:layout_marginLeft="@dimen/item_post_side_margin"
+        android:layout_marginEnd="@dimen/item_post_side_margin"
+        android:layout_marginRight="@dimen/item_post_side_margin"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     </LinearLayout>
 
 </LinearLayout>
