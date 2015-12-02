@@ -1,56 +1,56 @@
 package com.codepath.instagram.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
 import com.codepath.instagram.R;
 import com.codepath.instagram.adapters.InstagramPostsAdapter;
+import com.codepath.instagram.core.MainApplication;
 import com.codepath.instagram.helpers.Utils;
 import com.codepath.instagram.models.InstagramPost;
+import com.codepath.instagram.networking.InstagramClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseSwipeActivity {
     private static final String TAG = "HomeActivity";
 
     // `ip` = Instagram Post
     RecyclerView.LayoutManager ipLayoutManager;
-    RecyclerView ipRecyclerView;
-    
+
+    @Bind(R.id.ipRV) RecyclerView ipRecyclerView;
+
     InstagramPostsAdapter ipAdapter;
 
     ArrayList<InstagramPost> ipList;
 
-    JSONObject jsonPopular;
+    String clientId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ipRecyclerView = (RecyclerView) findViewById(R.id.ipRV);
+        ButterKnife.bind(this);
 
-        try {
-            jsonPopular = Utils.loadJsonFromAsset(getApplicationContext(), "popular.json");
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+        clientId = ((MainApplication) getApplication()).getClientId();
 
-        if (jsonPopular != null) {
-            setUpRecyclerView();
-        } else {
-            Toast.makeText(this, "No data found, sorry", Toast.LENGTH_LONG).show();
-        }
+        setUpRecyclerView();
+        setUpSwipeToRefresh();
+        getPopularFeed();
     }
 
     @Override
@@ -75,11 +75,65 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void getPopularFeed() {
+        if (!Utils.isNetworkAvailable(this)) {
+            Snackbar.make(ipRecyclerView, "Please make sure you have network connection", Snackbar.LENGTH_LONG).show();
+            swipeContainer.setRefreshing(false);
+            return;
+        }
+        InstagramClient.getPopularFeed(clientId, new JsonHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                swipeContainer.setRefreshing(true);
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    JSONObject meta = response.getJSONObject("meta");
+                    if (meta.getInt("code") != 200) {
+                        showFetchFeedFailureSnackbar();
+                        return;
+                    }
+                    ipList.clear(); // clear existing items if needed
+                    ipList.addAll(Utils.decodePostsFromJsonResponse(response));
+                    ipAdapter.notifyDataSetChanged();
+                    swipeContainer.setRefreshing(false);
+                } catch (JSONException e) {
+                    showFetchFeedFailureSnackbar();
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                swipeContainer.setRefreshing(false);
+                showFetchFeedFailureSnackbar();
+            }
+        });
+    }
+
     private void setUpRecyclerView() {
-        ipList = (ArrayList<InstagramPost>) Utils.decodePostsFromJsonResponse(jsonPopular);
-        ipAdapter = new InstagramPostsAdapter(ipList);
+        ipList = new ArrayList<>();
+        ipAdapter = new InstagramPostsAdapter(HomeActivity.this, ipList, clientId);
         ipLayoutManager = new LinearLayoutManager(this);
         ipRecyclerView.setLayoutManager(ipLayoutManager);
         ipRecyclerView.setAdapter(ipAdapter);
+    }
+
+    @Override
+    protected void onSwipe() {
+        getPopularFeed();
+    }
+
+    private void showFetchFeedFailureSnackbar() {
+        final Snackbar sbFailed = Snackbar.make(ipRecyclerView, "Failed fetching feed", Snackbar.LENGTH_LONG);
+        sbFailed.setAction("Refresh", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPopularFeed();
+                sbFailed.dismiss();
+            }
+        });
     }
 }
