@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp">
+
+    <ImageView
+        android:id="@+id/searchAvatarIV"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:id="@+id/searchTitleTV"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_toRightOf="@+id/searchAvatarIV"
+        android:layout_toEndOf="@+id/searchAvatarIV"
+        android:layout_alignTop="@+id/searchAvatarIV"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="14sp"
+        android:color="@color/gray_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/searchDescriptionTV"
+        android:layout_toRightOf="@+id/searchTitleTV"
+        android:layout_toEndOf="@+id/searchTitleTV"
+        android:layout_below="@+id/searchTitleTV"
+        android:layout_alignLeft="@+id/searchTitleTV"
+        android:layout_alignStart="@+id/searchTitleTV"
+        android:fontFamily="sans-serif"
+        android:textSize="14sp"
+        android:color="@color/light_gray_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

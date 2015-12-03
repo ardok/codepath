@@ -49,3 +49,37 @@ Walkthrough of all user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
+## DAY 3
+
+Time spent: 9 hours spent in total
+
+Completed user stories:
+
+ * [x] Required: User can login to Instagram using OAuth login.
+ * [x] Required: User can view their own feed.
+ * [x] Required: User can search for a user by username.
+ * [x] Required: User can search for a tag.
+ * [x] Optional: Include a ProgressBar during network loading.
+ * [x] Optional: User can get a grid of photos by clicking on a search result (i.e. a user or tag).
+
+Notes:
+
+* I have no idea how to manage data and all that. Like for example, we have SearchFragment that has 2 fragments inside it. How do you talk in between fragments?
+  I want to set up the click listener on the search result adapter that will start the PhotoGridActivity.
+  The problem is that the recommended way to set the click listener is to set it in the constructor of view holder.
+  There's no way for me to get the current item at the click event.
+  So, Nick (that's his name, right?) said that the easiest way would be to use setTag and getTag on the View (container). Hence, that's what I did.
+* Managing fragment backstack.
+  I don't know exactly how to manage this because we're using some pager adapter now. Maybe just need to read more about it.
+* Back button on main activity.
+  Can't exit the app. Keeps going to login activity and login activity will redirect back to main activity.
+* Back button on action bar (set home up enabled)
+  Why the Android doc says to use NavUtil? It looks like using super.onBackPressed is sufficient?
+* I couldn't find a way to add a Toolbar on login activity
+
+
+Walkthrough of all user stories:
+
+Sorry, no walktrough. There's no way to block my Instagram password from being typed.
+Opening Browser settings in both built-in emulator and genymotion crashes the app.
+Tried installing Chrome in Genymotion and I couldn't even open it. Keeps crashing.
