@@ -1,15 +1,16 @@
-package com.codepath.instagram.activities;
+package com.codepath.instagram.fragments;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.codepath.instagram.R;
 
-public class BaseSwipeActivity extends AppCompatActivity {
+public class BaseSwipeFragment extends Fragment {
     protected SwipeRefreshLayout swipeContainer;
 
-    public void setUpSwipeToRefresh() {
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+    public void setUpSwipeToRefresh(View v) {
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -82,7 +82,7 @@ public class CommentsActivity extends BaseSwipeActivity {
             swipeContainer.setRefreshing(false);
             return;
         }
-        InstagramClient.getComments(mediaId, clientId, new JsonHttpResponseHandler() {
+        InstagramClient.getInstance().getComments(mediaId, new JsonHttpResponseHandler() {
             @Override
             public void onStart() {
                 swipeContainer.setRefreshing(true);

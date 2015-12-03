@@ -43,14 +43,11 @@ public class InstagramPostsAdapter extends RecyclerView.Adapter<InstagramPostsAd
 
     private ArrayList<InstagramPost> mInstagramPostList;
     private Activity mActivity;
-    private String mClientId;
 
     public InstagramPostsAdapter(Activity activity,
-                                 ArrayList<InstagramPost> instagramPostArrayList,
-                                 String clientId) {
+                                 ArrayList<InstagramPost> instagramPostArrayList) {
         mActivity = activity;
         mInstagramPostList = instagramPostArrayList;
-        mClientId = clientId;
         Collections.sort(instagramPostArrayList, new Comparator<InstagramPost>() {
             @Override
             public int compare(InstagramPost lhs, InstagramPost rhs) {
@@ -74,7 +71,6 @@ public class InstagramPostsAdapter extends RecyclerView.Adapter<InstagramPostsAd
     @Override
     public void onBindViewHolder(PostItemViewHolder holder, int position) {
         final InstagramPost instagramPost = mInstagramPostList.get(holder.getLayoutPosition());
-        holder.clientId = mClientId;
         holder.mediaId = instagramPost.mediaId;
         holder.setPosterName(instagramPost.user.userName);
         holder.setPostDate(instagramPost.createdTime * 1000L);
@@ -102,7 +98,6 @@ public class InstagramPostsAdapter extends RecyclerView.Adapter<InstagramPostsAd
         @Bind(R.id.viewAllCommentsTV) TextView viewAllCommentsTV;
         @Bind(R.id.moreIV) ImageView moreIV;
 
-        String clientId;
         String mediaId;
 
         public PostItemViewHolder(View itemView, final Activity activity) {
@@ -114,7 +109,6 @@ public class InstagramPostsAdapter extends RecyclerView.Adapter<InstagramPostsAd
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(activity, CommentsActivity.class);
-                    intent.putExtra("clientId", clientId);
                     intent.putExtra("mediaId", mediaId);
                     intent.putExtra("code", 100);
                     activity.startActivity(intent);
