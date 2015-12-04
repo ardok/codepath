@@ -83,3 +83,24 @@ Walkthrough of all user stories:
 Sorry, no walktrough. There's no way to block my Instagram password from being typed.
 Opening Browser settings in both built-in emulator and genymotion crashes the app.
 Tried installing Chrome in Genymotion and I couldn't even open it. Keeps crashing.
+
+# DAY 4
+
+Time spent: 4 hours spent in total
+
+Completed user stories:
+
+ * [x] Required: Add pull-to-refresh for the home feed with SwipeRefreshLayout (this was done from DAY 2)
+ * [x] Required: User can open the Instagram client offline and see last loaded feed.
+ * [x] Required: Create a background service to make the network request, load items into the DB and populate the view (for the user's home feed).
+ * [ ] Optional: Add the ability for users to comment on a post.
+
+Notes:
+
+* There was no problem at all. It was pretty smooth. Just didn't have the time to do the optional comment ability.
+
+Walkthrough of all user stories:
+
+![Video Walkthrough](http://i.imgur.com/PKhbD1e.gif)
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
