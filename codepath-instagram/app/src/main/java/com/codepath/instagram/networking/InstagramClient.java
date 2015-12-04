@@ -1,11 +1,9 @@
 package com.codepath.instagram.networking;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.codepath.instagram.core.MainApplication;
 import com.codepath.instagram.helpers.Constants;
-import com.codepath.oauth.OAuthAsyncHttpClient;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -13,8 +11,6 @@ import com.loopj.android.http.RequestParams;
 import org.scribe.builder.api.Api;
 
 public class InstagramClient extends OAuthBaseClient {
-    private static InstagramClient instance;
-
     public static final String REST_URL = "https://api.instagram.com/v1";
     public static final Class<? extends Api> REST_API_CLASS = InstagramApi.class;
     public static final String REST_CONSUMER_KEY = "e05c462ebd86446ea48a5af73769b602";
@@ -60,5 +56,9 @@ public class InstagramClient extends OAuthBaseClient {
 
     public void getTagMediaRecent(String tagName, JsonHttpResponseHandler responseHandler) {
         client.get(getApiUrl(String.format("tags/%s/media/recent/", tagName)), responseHandler);
+    }
+
+    public String getAccessToken() {
+        return client.getAccessToken().getToken();
     }
 }
