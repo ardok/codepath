@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.codepath.twitterclient">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Login"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:name="com.activeandroid.app.Application">
+
+        <!-- add the following metadata for version and database name -->
+        <meta-data
+            android:name="TWITTER_CLIENT"
+            android:value="RestClient.db" />
+        <meta-data
+            android:name="TWITTER_CLIENT_DB_VERSION"
+            android:value="1" />
+
+        <activity android:name=".activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="oauth"
+                    android:host="codepathtweets" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.HomeTimelineActivity"
+            android:label="Timeline">
+        </activity>
+        <activity
+            android:name=".activities.PostTweetActivity"
+            android:label="Post Tweet">
+        </activity>
+    </application>
+
+</manifest>

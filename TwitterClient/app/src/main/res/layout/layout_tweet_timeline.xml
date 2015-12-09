@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/push_small">
+
+    <ImageView
+        android:id="@+id/tweeterAvatarIV"
+        android:layout_marginTop="@dimen/push_small"
+        android:layout_marginStart="@dimen/push_small"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <LinearLayout
+        android:id="@+id/tweeterNamesLL"
+        android:layout_marginStart="@dimen/push_small"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/tweeterAvatarIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tweeterFullNameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tweeterScreenNameTV"
+            android:layout_marginStart="@dimen/push_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tweetDateTV"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/tweeterNamesLL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tweetBodyTV"
+        android:layout_marginStart="@dimen/push_small"
+        android:layout_below="@+id/tweeterNamesLL"
+        android:layout_toEndOf="@+id/tweeterAvatarIV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_below="@+id/tweetBodyTV"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="@dimen/push_small"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</RelativeLayout>
