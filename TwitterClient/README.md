@@ -30,5 +30,6 @@ Notes:
 
 Walkthrough of all user stories:
 
+![Video Walkthrough](http://i.imgur.com/zRD8DPL.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
