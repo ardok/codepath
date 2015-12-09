@@ -25,7 +25,7 @@ Completed user stories:
 Notes:
 
 * What's up with the late submission? There's a lot going on at work today that needs my attention. In addition to that, I was stupidly stuck at Bad Authorization because I was trying to get rid of the "deprecated" Header in android-async-http client by bumping it to 1.4.9.
-* Why is there no licecap? I know this is lame, but `{"errors":[{"message":"Rate limit exceeded","code":88}]}`
+* I know this is lame, but I was facing `{"errors":[{"message":"Rate limit exceeded","code":88}]}`. So, it also delayed this submission...
 * I can't seem to correctly display the relative time. Maybe it's because I messed up with my emulator timezone or something?
 
 Walkthrough of all user stories:
