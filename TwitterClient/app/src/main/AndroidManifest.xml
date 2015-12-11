@@ -8,7 +8,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Login"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name="com.activeandroid.app.Application">
@@ -37,12 +37,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.HomeTimelineActivity"
+            android:name=".activities.HomeActivity"
             android:label="Timeline">
         </activity>
         <activity
             android:name=".activities.PostTweetActivity"
             android:label="Post Tweet">
+        </activity>
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:label="Profile">
         </activity>
     </application>
 

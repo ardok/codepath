@@ -30,6 +30,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Twitter Client Login");
     }
 
 
@@ -57,7 +58,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
             }
         });
 
-        Intent i = new Intent(this, HomeTimelineActivity.class);
+        Intent i = new Intent(this, HomeActivity.class);
 //        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
         finish();
