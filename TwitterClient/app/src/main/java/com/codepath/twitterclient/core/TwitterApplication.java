@@ -2,9 +2,11 @@ package com.codepath.twitterclient.core;
 
 import android.app.Application;
 import android.content.Context;
+import android.view.View;
 
 import com.codepath.twitterclient.models.User;
 import com.codepath.twitterclient.networking.TwitterClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
 /*
  * This is the Android application itself and is used to configure various settings

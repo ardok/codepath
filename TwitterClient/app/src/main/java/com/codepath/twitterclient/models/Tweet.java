@@ -24,11 +24,11 @@ import java.util.List;
 @Table(name = "tweet")
 public class Tweet extends Model implements Serializable {
     // Define table fields
-    @Column(name = "name")
+    @Column(name = "body")
     private String body;
     @Column(name = "uid")
     private long uid;
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     private String createdAt;
 
     @Column(name = "user_id")

@@ -41,11 +41,39 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, handler);
     }
 
+    public void getUser(long userId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("users/show.json");
+        RequestParams params = new RequestParams();
+        params.put("user_id", String.valueOf(userId));
+        getClient().get(apiUrl, params, handler);
+    }
+
     public void postTweet(String tweetBody, AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/update.json");
         RequestParams params = new RequestParams();
         params.put("status", tweetBody);
         getClient().post(apiUrl, params, handler);
+    }
+
+    public void getMentionsTimeline(int count, long maxId, AsyncHttpResponseHandler handler)  {
+        String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("count", String.valueOf(count));
+        if (maxId > 0) {
+            params.put("max_id", maxId);
+        }
+        getClient().get(apiUrl, params, handler);
+    }
+
+    public void getUserTimeline(long userId, int count, long maxId, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        RequestParams params = new RequestParams();
+        params.put("user_id", String.valueOf(userId));
+        params.put("count", String.valueOf(count));
+        if (maxId > 0) {
+            params.put("max_id", maxId);
+        }
+        getClient().get(apiUrl, params, handler);
     }
 
 //    private Header getAuthorizationHeader() {

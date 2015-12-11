@@ -15,8 +15,8 @@ public class ImageUtils {
                 .oval(false)
                 .build();
         Picasso.with(iv.getContext()).load(url)
-                .placeholder(R.drawable.ic_profile)
-                .error(R.drawable.ic_profile)
+                .placeholder(R.mipmap.ic_profile)
+                .error(R.mipmap.ic_profile)
                 .transform(transformation)
                 .into(iv);
     }

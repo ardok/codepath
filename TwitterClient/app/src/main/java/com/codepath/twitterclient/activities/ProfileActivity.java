@@ -10,9 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.twitterclient.R;
-import com.codepath.twitterclient.adapters.HomeTimelineAdapter;
+import com.codepath.twitterclient.adapters.ProfileAdapter;
+import com.codepath.twitterclient.core.TwitterApplication;
 import com.codepath.twitterclient.listeners.EndlessRecyclerViewScrollListener;
 import com.codepath.twitterclient.models.Tweet;
+import com.codepath.twitterclient.models.User;
 import com.codepath.twitterclient.networking.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -25,44 +27,63 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class HomeTimelineActivity extends BaseSwipeActivity {
+public class ProfileActivity extends BaseSwipeActivity {
     @Bind(R.id.toolbar) Toolbar toolbar;
+
     @Bind(R.id.tweetRV) RecyclerView tweetRV;
 
     RecyclerView.LayoutManager layoutManager;
 
-    private HomeTimelineAdapter homeTimelineAdapter;
+    private ProfileAdapter profileAdapter;
 
     private ArrayList<Tweet> tweets;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_timeline);
+        setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+        Intent intent = getIntent();
+        if (intent == null) {
+            finish();
+            return;
+        }
+
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setUpSwipeToRefresh();
-        setUpRecyclerView();
 
-        // First time
-        fetchHomeTimeline(0, 0);
+        user = (User) intent.getSerializableExtra("user");
+        if (user != null) {
+            setUpRecyclerView();
+            getSupportActionBar().setTitle("@" + user.getScreenName());
+            fetchUserTimeline(0, 0);
+            return;
+        }
+
+        // User is null, it means that we need to fetch that user's info first
+        long userId = intent.getLongExtra("userId", 0);
+        if (userId == 0) {
+            finish();
+            return;
+        }
+        fetchUser(userId);
     }
 
-    // Inflate the menu; this adds items to the action bar if it is present.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_timeline, menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_tweet:
-                Intent intent = new Intent(HomeTimelineActivity.this, PostTweetActivity.class);
-                startActivityForResult(intent, PostTweetActivity.REQUEST_CODE_POST_TWEET);
+            case android.R.id.home:
+                supportFinishAfterTransition();
                 return true;
 
             default:
@@ -70,38 +91,23 @@ public class HomeTimelineActivity extends BaseSwipeActivity {
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case PostTweetActivity.REQUEST_CODE_POST_TWEET:
-                if (resultCode == RESULT_OK) {
-                    Tweet newTweet = (Tweet) data.getSerializableExtra("tweet");
-                    // Tweet is already ordered from newest to oldest
-                    tweets.add(0, newTweet);
-                    homeTimelineAdapter.notifyDataSetChanged();
-                }
-                break;
-        }
-    }
-
     private void setUpRecyclerView() {
         tweets = new ArrayList<>();
-        homeTimelineAdapter = new HomeTimelineAdapter(this, tweets);
-        layoutManager = new LinearLayoutManager(getApplicationContext());
+        profileAdapter = new ProfileAdapter(this, user, tweets);
+        layoutManager = new LinearLayoutManager(this);
         tweetRV.setLayoutManager(layoutManager);
-        tweetRV.setAdapter(homeTimelineAdapter);
+        tweetRV.setAdapter(profileAdapter);
         tweetRV.addOnScrollListener(new EndlessRecyclerViewScrollListener((LinearLayoutManager) layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                fetchHomeTimeline(page, Tweet.getTweetWithLowestId(tweets).getUid());
+                fetchUserTimeline(page, Tweet.getTweetWithLowestId(tweets).getUid());
             }
         });
     }
 
-    private void fetchHomeTimeline(final int page, long maxId) {
+    private void fetchUserTimeline(final int page, long maxId) {
         swipeRefreshLayout.setRefreshing(true);
-        TwitterClient.getInstance().getHomeTimeline(page > 0 ? 26 : 25, maxId, new JsonHttpResponseHandler() {
+        TwitterClient.getInstance().getUserTimeline(user.getUid(), page > 0 ? 26 : 25, maxId, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 swipeRefreshLayout.setRefreshing(false);
@@ -119,9 +125,9 @@ public class HomeTimelineActivity extends BaseSwipeActivity {
                 tweets.addAll(newTweets);
 
                 if (page == 0) {
-                    homeTimelineAdapter.notifyDataSetChanged();
+                    profileAdapter.notifyDataSetChanged();
                 } else {
-                    homeTimelineAdapter.notifyItemRangeInserted(homeTimelineAdapter.getItemCount(),
+                    profileAdapter.notifyItemRangeInserted(profileAdapter.getItemCount(),
                             tweets.size() - 1);
                 }
             }
@@ -136,8 +142,30 @@ public class HomeTimelineActivity extends BaseSwipeActivity {
         });
     }
 
+    private void fetchUser(long userId) {
+        swipeRefreshLayout.setRefreshing(true);
+        TwitterClient.getInstance().getUser(userId, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                user = User.fromJSON(response);
+                // We have user, now set everything up and fetch timeline
+                setUpRecyclerView();
+                getSupportActionBar().setTitle("@" + user.getScreenName());
+                fetchUserTimeline(0, 0);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                swipeRefreshLayout.setRefreshing(false);
+                if (errorResponse != null) {
+                    Log.d("DEBUG", errorResponse.toString());
+                }
+            }
+        });
+    }
+
     @Override
     protected void onSwipe() {
-        fetchHomeTimeline(0, 0);
+        fetchUser(user.getUid());
     }
 }

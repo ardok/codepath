@@ -4,6 +4,9 @@
     <item android:id="@+id/action_tweet" android:title="Tweet"
         android:icon="@mipmap/ic_add"
         android:orderInCategory="100" app:showAsAction="always" />
+    <item android:id="@+id/action_profile" android:title="Profile"
+        android:icon="@mipmap/ic_profile"
+        android:orderInCategory="200" app:showAsAction="always" />
     <item android:id="@+id/action_settings" android:title="Settings"
         android:orderInCategory="1000" app:showAsAction="never" />
     <item android:id="@+id/action_logout" android:title="Log Out"
